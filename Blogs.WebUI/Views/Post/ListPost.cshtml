@@ -1,0 +1,25 @@
+﻿@model Blogs.WebUI.Models.PostListViewModel
+@{
+    ViewBag.Title = "ListPost";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+
+<div class="col-xs-3">
+    @foreach (var post in Model.Post)
+    {
+
+        <div class="span4">
+            <h2>@post.Title</h2>
+            <p id="preview">@post.Preview</p>
+            <p><a href="@Url.Action("AllPost", "Post", new { post.IdPost })" class="btn btn-primary">More info</a></p>
+            <hr>
+        </div>
+    }
+
+</div>
+
+<div id="page-links">
+    @Html.PageLinks(Model.PagingInfo, x => Url.Action("ListPost", new { page = x }))
+
+</div>

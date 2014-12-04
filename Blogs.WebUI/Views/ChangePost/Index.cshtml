@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Blogs.Domain.Entities.Post>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<table class="Grid">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(item.Title, "Edit", new { item.IdPost })</td>
+                <td>
+                    @using (Html.BeginForm("Delete", "ChangePost"))
+                    {
+                        @Html.Hidden("idPost", item.IdPost)
+    <button type="submit" class="btn btn-primary">Delete</button>
+                    }
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<p>@Html.ActionLink("Add a new post", "CreatePost")</p>

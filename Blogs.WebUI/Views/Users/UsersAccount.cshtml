@@ -1,0 +1,45 @@
+﻿@model Blogs.Domain.Entities.Users
+@{
+    ViewBag.Title = null;
+
+    bool IsAuth = @ViewBag.IsAuth == null ? false : @ViewBag.IsAuth;
+    bool? IsChange = @ViewBag.IsChange;
+    Layout = null;
+
+}
+
+
+    @if (IsAuth)
+{
+
+        <div class="btn-group">
+            <a class="btn" href="#"> @Model.Login</a>
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                @if (IsChange == true)
+                {
+                    <li>@Html.ActionLink("Users", "AllUsersShow", "Admin") </li>
+                    <li>@Html.ActionLink("Edit posts", "Index", "ChangePost")</li>
+                    <li>@Html.ActionLink("Create post", "CreatePost", "ChangePost")<hr></li>
+                    
+                }
+               
+                <li>@Html.ActionLink("Change password", "ChangeUsersPassword", "Users")</li>
+                <li>@Html.ActionLink("Log out", "Logout", "Users")</li>
+            </ul>
+
+        </div>
+}
+else
+{
+    <a class="btn" href=" @Url.Action("Login", "Users") ">Log in</a>
+    <a class="btn" href=" @Url.Action("RegisterUsers", "Users") ">Sign up</a>
+}
+
+<script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-dropdown.js")" type="text/javascript"></script>
+
+
+<script type="text/javascript">
+    $('.dropdown-toggle').dropdown();
+</script>

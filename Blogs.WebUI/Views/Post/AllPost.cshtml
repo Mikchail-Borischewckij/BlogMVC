@@ -1,0 +1,21 @@
+﻿@model Blogs.WebUI.Models.FullPostViewModel
+@{
+    ViewBag.Title = "AllPost";   
+}
+
+<div class="post">
+    <h2>@Model.Title</h2>
+    <p class="posted"> Posted by <a href="@Url.Action("GetAllPostByUser", "Post", new { Model.IdUser })">@Html.Action("GetUserNameById", "Users", new { Model.IdUser })</a> @Model.create_time </p>
+    <p class="content">@Model.Content</p>
+    <hr>
+    @foreach (var tag in @Model.tags)
+    {
+        <a href="@Url.Action("GetAllPostByTag", new {tag = @tag })"> @tag </a>
+      
+    }
+   
+</div>
+<hr>
+
+@{Html.RenderAction("CreateComment", "Comments", Model.idPost);} 
+@{Html.RenderPartial("AllComment");}

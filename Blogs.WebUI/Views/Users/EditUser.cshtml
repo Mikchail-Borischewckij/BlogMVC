@@ -1,0 +1,17 @@
+﻿@model Blogs.Domain.Entities.Users
+
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<h2>Edit: @Model.Login</h2>
+@using (Html.BeginForm("EditUser", "Users"))
+{
+    <div class="control-group">
+    <span class="control-label uneditable-input">@Model.Login</span>
+        </div>
+    <div class="control-group">
+        <span class="control-label uneditable-input">@Model.Email</span>
+    </div>
+    <button type="submit" class="btn btn-primary"> Save</button>
+}

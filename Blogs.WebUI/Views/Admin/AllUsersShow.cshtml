@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Blogs.Domain.Entities.Users>
+@{
+    ViewBag.Title = "AllUsersShow";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<h4>All users </h4>
+
+
+<table class="Grid">
+    @if (Model != null)
+    {
+        foreach (var user in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(user.Login, "EditUser", new { IdUser = user.UserId })</td>
+                <td>
+                    @using (Html.BeginForm("Delete", "Admin"))
+                    {
+                        @Html.Hidden("UserId", user.UserId)
+    <button type="submit" class="btn btn-primary">Delete</button>
+                    }
+                </td>
+
+            </tr>
+        }
+    } 
+
+    

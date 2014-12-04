@@ -1,0 +1,42 @@
+﻿@model Blogs.Domain.Entities.Users
+
+@{
+    ViewBag.Title = "EditUser";
+}
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Users</legend>
+
+        <div class="control-group">
+            <h5>Name: @Model.Login</h5>
+            </div>
+
+            <div class="editor-label">
+                <h5>Email: @Model.Email</h5>
+            </div>
+
+
+
+            <h5>Curent role: @ViewBag.Role</h5>
+
+            @{ List<SelectListItem> list = new List<SelectListItem>();
+             list.Add(new SelectListItem() { Text = null });
+             list.Add(new SelectListItem() { Text = "fan" });
+             list.Add(new SelectListItem() { Text = "manager" });
+             list.Add(new SelectListItem() { Text = "administrator" });
+            }
+            <h5>Set role</h5>
+            @Html.DropDownList("nameRole", list)
+            <p>
+                <input type="submit" value="Save" />
+            </p>
+</fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "AllUsersShow")
+</div>
