@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using System.Web;
 using System.Web.Mvc;
-
 
 namespace Blogs.Domain.Entities
 {
@@ -14,7 +8,7 @@ namespace Blogs.Domain.Entities
     {
         [HiddenInput(DisplayValue = false)]
         [Key]
-        public int IdPost { get; set; }
+        public int Id { get; set; }
 
         [HiddenInput(DisplayValue = false)]
         public int IdUser { get; set; }
@@ -33,11 +27,11 @@ namespace Blogs.Domain.Entities
         public string Content { get; set; }
 
         [StringLength(100, ErrorMessage = "This fiels must be less the {0} symbols")]
-        public string tags { get; set; }
+        public string Tags { get; set; }
 
         [HiddenInput(DisplayValue = false)]
-        public DateTime create_time { get; set; }
+        public DateTime CreateTime { get; set; }
         [HiddenInput(DisplayValue = false)]
-        public DateTime update_time { get; set; }
+        public DateTime UpdateTime { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Blogs.WebUI
 
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            WebSecurity.InitializeDatabaseConnection("BlogDataBase", "Users", "UserId", "Login", true);
+            WebSecurity.InitializeDatabaseConnection("BlogDataBase", "Users", "Id", "Login", true);
             if (!Roles.RoleExists("fan")) Roles.CreateRole("fan");
             if (!Roles.RoleExists("administrator")) Roles.CreateRole("administrator");
             if (!Roles.RoleExists("manager")) Roles.CreateRole("manager");
@@ -37,6 +37,8 @@ namespace Blogs.WebUI
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.MapRoute(null,
                 "{controller}/{action}", new { controller = "Post", action = "ListPost" });
+
+      
         }
     }
 }

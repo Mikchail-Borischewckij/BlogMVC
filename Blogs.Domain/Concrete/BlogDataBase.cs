@@ -1,7 +1,6 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using System.Data.Entity.SqlServer;
 using Blogs.Domain.Entities;
-
 
 namespace Blogs.Domain.Concrete
 {
@@ -10,10 +9,11 @@ namespace Blogs.Domain.Concrete
          public DbSet<Users> Users { get; set; }
          public DbSet<Post> Posts { get; set; }
          public DbSet<Comments> Comments { get; set; }
+         public DbSet<Likes> Likes { get; set; }
 
          static BlogDataBase()
         {
-            var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
+            var ensureDllIsCopied = SqlProviderServices.Instance;
         }
     }
 }

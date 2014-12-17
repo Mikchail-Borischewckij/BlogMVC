@@ -1,0 +1,166 @@
+﻿input #target { 
+ background: url("~/img/like.jpg"); 
+ width: 10px; 
+ height: 10px; 
+} 
+
+
+
+
+.sosor
+{
+    cursor:pointer;
+    width:700px; 
+    height:34px;
+     background-color:#ededed;
+      line-height:34px;
+      margin-top:5px;
+}
+
+div.lineblue {
+    background-color: #2f7df1;
+    color: white;
+}
+
+h3.infoText { color: white }
+
+div.Login {
+    width: 150px;
+    height: 34px;
+    float: left
+}
+
+div.Email {
+    width: 250px;
+    height: 34px;
+    float: left
+}
+
+div.Actions {
+    margin-right: 40px;
+    height: 34px;
+    float: right
+}
+
+div.buttonDelete {
+    height: 34px;
+    float: right
+}
+
+div.buttonEdit {
+    height: 34px;
+    float: right
+}
+
+    legend.line {
+    width: 270px;
+    height: 34px;
+        background-color: #2f7df1;
+        width: 230px; 
+        color: white;
+         text-align: center; 
+         border-radius: 7px;
+}
+
+        .sosor {
+        cursor: pointer;
+    }
+
+    .sosor:hover {
+        background-color: #e0ffff;
+    }
+
+    .mylink {
+        color: black;
+    }
+
+
+        div.titlePost {
+    width: 150px;
+    height: 34px;
+        float: left
+    }
+
+    div.ActionsPost {
+        margin-left: 5px;
+        height: 34px;
+        float: right
+    }
+
+    div.Link {
+        height: 34px;
+        float: left
+    }
+
+    div.buttonDel {
+        height: 34px;
+        float: right
+    }
+
+    div.buttonEd {
+        height: 34px;
+        float: right
+    }
+
+    button.btn.btn-primary.mybutton { margin-top: -10px }
+
+        div.allpost {
+            max-width: 100%;
+            max-height: 100%;
+    }
+        div.list { float: right }
+
+        button.btn.btn-primary.search { margin-top: -10px }
+
+        b.mytext { color: #666 }
+
+ div.editUser {
+     text-align: left;
+     width: 240px;
+     padding: 5px;
+     height: 305px;
+     border: solid 1px #c0c0c0;
+     border-radius: 7px
+ }
+
+ h5.textUser { color: #2f7df1 }
+
+ h5.text {
+     color: black;
+     text-align: center
+ }
+
+ div.editLink {
+     width: 250px;
+     height: 25px;
+     text-align: center;
+     border-bottom-left-radius: 7px;
+     -webkit-border-bottom-right-radius: 7px;
+     margin-left: -5px;
+     background-color: #f5f5f5;
+     color: white;
+     opacity: 0.9
+ }
+
+ .editorPost textarea {
+     height: 200px;
+     width: 1000px;
+     max-width: 1000px;
+ }
+ div.mytitle { text-align: center }
+ .editorPost input {
+     width: 370px;
+ }
+
+
+ div.centerText { text-align: center }
+
+    .createPost textarea {
+        height: 150px;
+        width: 700px;
+        max-width: 700px;
+    }
+
+div.listPost { height: 40% }
+
+button.buttonDeleteComment { float: right }

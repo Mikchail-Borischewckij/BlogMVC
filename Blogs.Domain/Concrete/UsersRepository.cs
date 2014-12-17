@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Blogs.Domain.Abstract;
 using Blogs.Domain.Entities;
 
@@ -10,69 +6,67 @@ namespace Blogs.Domain.Concrete
 {
     public class UsersRepository : IUserRepository
     {
-        private BlogDataBase blogDB = new BlogDataBase();
+        private BlogDataBase _blogDb = new BlogDataBase();
 
-        public bool CreateUser(Users user)
+        public bool Create(Users user)
         {
-            if (user.UserId == 0)
-                blogDB.Users.Add(user);
+            if (user.Id == 0)
+                _blogDb.Users.Add(user);
 
-            blogDB.SaveChanges();
+            _blogDb.SaveChanges();
             return false;
         }
 
-        public bool ChangeUser(Users user)
+        public bool Update(Users user)
         {
-            Users userOfDB = blogDB.Users.Find(user.UserId);
-            if (userOfDB != null)
-            {
-                userOfDB.Login = user.Login;
-                userOfDB.Password = user.Password;
-                userOfDB.Email = user.Email;
-            }
-         
-            blogDB.SaveChanges();
-            return false;
+            var userOfDb = _blogDb.Users.Find(user.Id);
+            if (userOfDb == null)
+                return false;
+
+            userOfDb.Login = user.Login;
+            userOfDb.Password = user.Password;
+            userOfDb.Email = user.Email;
+
+            _blogDb.SaveChanges();
+            return true;
         }
+
         /// <summary>
         /// Authentication users
         /// </summary>
-        public bool AuthenticationOfUser(string userNameorEmail, string userPassword)
+        public bool Authentication(string userNameorEmail, string userPassword)
         {
             int hash = userPassword.GetHashCode();
-            var user = from u in blogDB.Users where u.Login == userNameorEmail && u.Password == hash.ToString() select u;
-            List<Users> users = user.ToList<Users>();
-            if (users.Count == 0)
+            var user = from u in _blogDb.Users where u.Login == userNameorEmail && u.Password == hash.ToString() select u;
+            var users = user.ToList();
+
+            return users.Count != 0;
+        }
+
+        public bool CheckExist(string userLogin)
+        {
+            var list = _blogDb.Users.Where(m => m.Login.Equals(userLogin));
+            var users = list.ToList();
+
+            return users.Count != 0;
+        }
+
+        public bool Delete(Users user)
+        {
+            if (user == null)
                 return false;
 
+            Users userForDelete = _blogDb.Users.FirstOrDefault(p => p.Id == user.Id);
+            _blogDb.Users.Remove(userForDelete);
+            _blogDb.SaveChanges();
             return true;
         }
 
-        public bool CheckExistOfUser(string userLogin)
-        {
-            IQueryable<Users> list = blogDB.Users.AsQueryable<Users>().Where(m => m.Login.Equals(userLogin));
-            List<Users> users = list.ToList<Users>();
-            if (users.Count == 0)
-                return false;
-
-            return true;
-        }
-
-        public void DeleteUser(Users user)
-        {
-            if (user != null)
-            {
-                Users userForDelete = blogDB.Users.FirstOrDefault(p => p.UserId == user.UserId);
-                blogDB.Users.Remove(userForDelete);
-                blogDB.SaveChanges();
-            }
-        }
-
-        public IQueryable<Users> Users
+        public IQueryable<Users> Get
         {
             get
             {
-                return blogDB.Users;
+                return _blogDb.Users;
             }
         }
     }

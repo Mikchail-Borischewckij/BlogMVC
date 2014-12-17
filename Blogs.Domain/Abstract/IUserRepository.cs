@@ -1,20 +1,16 @@
-﻿using Blogs.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
+using Blogs.Domain.Entities;
 
 namespace Blogs.Domain.Abstract
 {
     public interface IUserRepository
     {
-        IQueryable<Users> Users { get; }
-        bool ChangeUser(Users user);
-        bool CreateUser(Users user);
-        bool AuthenticationOfUser(string userName, string userPassword);
-        bool CheckExistOfUser(string userLogin);
-        void DeleteUser(Users user);
+        IQueryable<Users> Get { get; }
+        bool Update(Users user);
+        bool Create(Users user);
+        bool Authentication(string userName, string userPassword);
+        bool CheckExist(string userLogin);
+        bool Delete(Users user);
    
     }
 }

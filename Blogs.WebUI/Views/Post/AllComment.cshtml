@@ -1,17 +1,19 @@
-﻿<hr>
-<div class="span4">
-    @foreach (var comment in Model.comments)
+﻿@model Blogs.WebUI.Models.FullPostViewModel
+
+
+    @foreach (var comment in Model.Comments.OrderBy(x =>x.Id))
     {
+           using (Html.BeginForm("DeleteComment", "Comments",FormMethod.Post))
+                    {
+                            @Html.Hidden("idPost", comment.IdPost)
+                            @Html.Hidden("idComment", comment.Id)
+                            <button class="buttonDeleteComment" type="submit" style="float: right">x</button>
+                    }
 
-        <p class="com"> Сomment by <a href="@Url.Action("GetAllPostByUser", "Post", new { idUser = comment.IdUsers})"> @Html.Action("GetUserNameById", "Users", new { idUser = comment.IdUsers }) </a>@comment.create_time  </p>
-        <p class="content">@comment.Content</p>
-        <div>
-            @Html.ActionLink("Edit", "sdfsd", "Users")
-
-            @Html.ActionLink("Delete", "sdfsd", "Users")
-        </div>
+        <p class="com"> Сomment by <a href="@Url.Action("GetAllPostByUser", "Post", new { idUser = comment.IdUsers})">@Html.Action("GetUserNameById", "Users", new {idUser = @comment.IdUsers }) </a>@comment.CreateTime  </p>
+        <p class="content"><b>@comment.Content</b></p>
         <hr>
-
     }
 
-</div>
+
+

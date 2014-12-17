@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using Blogs.Domain.Abstract;
 using System.Web.Security;
+using Blogs.Domain.Abstract;
 using Blogs.Domain.Entities;
 using Blogs.WebUI.Models;
 
@@ -12,11 +10,11 @@ namespace Blogs.WebUI.Controllers
 {
     public class UsersController : Controller
     {
-          IUserRepository repo;
+        private IUserRepository _repo;
 
         public UsersController(IUserRepository repoParam)
         {
-            repo = repoParam;
+            _repo = repoParam;
         }
 
         //  User/RegisterUsers
@@ -26,29 +24,22 @@ namespace Blogs.WebUI.Controllers
             return View();
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult RegisterUsers(UserRegisterViewModel model)
         {
-            if (ModelState.IsValid && !repo.CheckExistOfUser(model.Login))
-            {
-                Users user = new Users()
-                {
-                    Login = model.Login,
-                    Password = model.Password.GetHashCode().ToString(),
-                    Email = model.Email,
-              
-                };
-                repo.CreateUser(user);
-                Roles.AddUserToRole(user.Login, "fan");
-                //Roles.AddUserToRole(user.Login, "administrator");
-               
-            }
-            else
+            if (!ModelState.IsValid || _repo.CheckExist(model.Login))
             {
                 ModelState.AddModelError("", "User with " + model.Login + " name already exists");
                 return View(model);
             }
-
+            var user = new Users()
+            {
+                Login = model.Login,
+                Password = model.Password.GetHashCode().ToString(),
+                Email = model.Email,
+            };
+            _repo.Create(user);
+            Roles.AddUserToRole(user.Login, "fan");
             return RedirectToAction("Login");
         }
 
@@ -66,10 +57,10 @@ namespace Blogs.WebUI.Controllers
             return RedirectToAction("ListPost", "Post");
         }
 
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult Login(LoginModel model)
         {
-            if (ModelState.IsValid && repo.AuthenticationOfUser(model.Login, model.Password))
+            if (ModelState.IsValid && _repo.Authentication(model.Login, model.Password))
                 FormsAuthentication.RedirectFromLoginPage(model.Login, false);
             else
                 ModelState.AddModelError("", "Incorrect login or password!");
@@ -77,60 +68,79 @@ namespace Blogs.WebUI.Controllers
             return View();
         }
 
-        [Authorize]
-        [HttpGet]
+        [HttpGet, Authorize]
         public ViewResult ChangeUsersPassword()
         {
             return View();
         }
 
-       [Authorize]
-        [HttpPost]
+        [Authorize]
+        [HttpPost, ValidateInput(false)]
         public ActionResult ChangeUsersPassword(ChangePasswordModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                string oldPass = model.OldPassword.GetHashCode().ToString();
-                Users user = repo.Users.FirstOrDefault(u => u.Login == User.Identity.Name && u.Password == oldPass);
-                user.Password = model.Password.GetHashCode().ToString();
-                if (user == null)
-                    ModelState.AddModelError("", "Your old password incorrect. Try another time.");
-                else
-                    repo.ChangeUser(user);
+                return RedirectToAction("ListPost", "Post");
             }
-            return RedirectToAction("ListPost", "Post"); ;
+            var oldPass = model.OldPassword.GetHashCode().ToString();
+            var user = _repo.Get.FirstOrDefault(u => u.Login == User.Identity.Name && u.Password == oldPass);
+
+            if (user == null)
+            {
+                ModelState.AddModelError("", "Your old password incorrect. Try another time.");
+                return View();
+            }
+            user.Password = model.Password.GetHashCode().ToString();
+            _repo.Update(user);
+
+            return RedirectToAction("ListPost", "Post");
         }
 
-        public string GetUserNameById(int? IdUser)
+        public string GetUserNameById(int? idUser)
         {
-            Users user = repo.Users.FirstOrDefault(p => p.UserId == IdUser);
-
+            var user = _repo.Get.FirstOrDefault(p => p.Id == idUser);
             return user != null ? user.Login : "User is deleted";
-            
         }
 
         public ViewResult UsersAccount()
         {
-            
-            if (User.Identity.IsAuthenticated)
+            if (!User.Identity.IsAuthenticated)
             {
-                Users user = repo.Users.FirstOrDefault(u => u.Login == User.Identity.Name);
-                if (user == null)
-                 ViewBag.IsAuth = false; 
-                else ViewBag.IsAuth = true;
-
-                if (User.IsInRole("manager") || User.IsInRole("administrator"))
-                    ViewBag.IsChange = true;
-                else ViewBag.IsChange = false;
-
-                return View(user);
+                var defaultUser = new Users {Links = GetLinksOfAnonimusUsers()};
+                return View(defaultUser);
             }
-            else
-            {
-                ViewBag.IsAuthenticated = false;
-                return View();
-            }
+
+            var user = _repo.Get.FirstOrDefault(u => u.Login == User.Identity.Name);
+            if (user != null)
+                user.Links = GetLinksOfAutorizireUsers();
+
+            return View(user);
         }
 
+        private static IEnumerable<Link> GetLinksOfAnonimusUsers()
+        {
+            return new List<Link>
+            {
+                new Link {Name = "Log in", Url = "/Login", NameController = "Users"},
+                new Link {Name = "Sign up", Url = "/RegisterUsers", NameController = "Users"}
+            };
+        }
+
+        private IEnumerable<Link> GetLinksOfAutorizireUsers()
+        {
+            var links = new List<Link>();
+            if (User.IsInRole("administrator"))
+                links.Add(new Link {Name = "Users", Url = "/AllUsersShow", NameController = "Admin"});
+
+            if (!User.IsInRole("fan"))
+            {
+                links.Add(new Link {Name = "Edit posts", Url = "/Index", NameController = "ChangePost"});
+                links.Add(new Link {Name = "Create post", Url = "/CreatePost", NameController = "ChangePost"});
+            }
+
+            links.Add(new Link {Name = "Change password", Url = "/ChangeUsersPassword", NameController = "Users"});
+            links.Add(new Link {Name = "Log out", Url = "/Logout", NameController = "Users"});
+            return links;
+        }
     }
 }

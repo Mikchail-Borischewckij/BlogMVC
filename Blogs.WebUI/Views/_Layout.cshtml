@@ -2,10 +2,17 @@
 <html>
 <head>
     <title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-1.8.2.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
     <link href="@Url.Content("~/Styles/bootstrap.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Styles/bootstrap-responsive.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Styles/bootstrap-responsive.css")" rel="stylesheet" type="text/css"/>
+   
+    <link href="~/Styles/Style.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="~/Scripts/bootstrap.js"></script>
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -16,48 +23,28 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </a>
-               
-                <a class="brand" href=" @Url.Action("ListPost","Post")">MyBlog</a>
+                <a class="brand" href="@Url.Action("ListPost", "Post")">Personal Blog</a>
                 <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li class="active"><a href="@Url.Action("ListPost","Post")">Home</a></li>
-                        <li><a href="#about">About</a></li>
-                        <li><a href="#contact">Contact</a></li>
-
-                    </ul>
-                    <form class="navbar-form pull-right">
-
-
-                        <form class="navbar-search pull-left">
-                        
-                            <input type="text" class="search-query" placeholder="Search">
-                            @{Html.RenderAction("UsersAccount", "Users");} ;
-                        </form>
-
-                       
-                    </form>
-
-                </div><!--/.nav-collapse -->
-            </div>
+                    <div class="navbar-form pull-right">
+                        <span>
+                                @{Html.RenderAction("UsersAccount", "Users");}
+                            </span>
+                    </div>
+                </div>
+                </div>
         </div>
     </div>
 
     <div class="container">
         <div class="hero-unit">
-          <h1>Hello!</h1>
-            <p>  This is my first blog. Here I will post information of various kinds</p>
-            </div>
-            <div class="row">
-               
-                    @RenderBody()
-               
-            </div>
-
-
-
+            <img src="/img/Bez_imeni-1_kopia.png">
         </div>
-
-        
+   
+        @RenderBody()
+   
+        </div>
 </body>
 </html>
-
+<script>
+    $(".collapse").collapse()
+</script>

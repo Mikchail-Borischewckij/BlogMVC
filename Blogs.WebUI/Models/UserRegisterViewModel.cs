@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Security;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Blogs.WebUI.Models
 {
@@ -72,6 +67,7 @@ namespace Blogs.WebUI.Models
 
         [Required]
         [Display(Name = "Login")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string Login { get; set; }
 
         [Required]
@@ -84,7 +80,7 @@ namespace Blogs.WebUI.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
+     
     }
      
 }

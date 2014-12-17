@@ -4,22 +4,39 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
+<div class="row">
+        <div class="list">
+            @using (Html.BeginForm("ListPost", "Post", FormMethod.Get))
+            { 
 
-<div class="col-xs-3">
-    @foreach (var post in Model.Post)
-    {
-
-        <div class="span4">
-            <h2>@post.Title</h2>
-            <p id="preview">@post.Preview</p>
-            <p><a href="@Url.Action("AllPost", "Post", new { post.IdPost })" class="btn btn-primary">More info</a></p>
-            <hr>
+                <input type="text" maxlength="256" size="60" name="search">
+                <button type="submit" class="btn btn-primary mybutton">Search</button>
+   
+            }
         </div>
-    }
+        <br />
+        <br />
+        <hr />
+        <div class="allpost">
+            @foreach (var post in Model.Post)
+            {
 
-</div>
+                <div class="span4">
+                    <div class="listPost">
+                        <h2>@post.Title</h2>
+                        <p id="preview">@post.Preview</p>
+                    </div>
+                    <p><a href="@Url.Action("AllPost", "Post", new { IdPost = post.Id })" class="btn btn-primary">More info</a></p>
+                    <hr>
+                </div>
+            }
 
-<div id="page-links">
-    @Html.PageLinks(Model.PagingInfo, x => Url.Action("ListPost", new { page = x }))
-
-</div>
+        </div>
+    </div>
+     @if (ViewBag.Page)
+     {
+         <div class="pagination pagination-right">
+             @Html.PageLinks(Model.PagingInfo, x => Url.Action("ListPost", new {page = x}))
+         </div>
+     }
+    

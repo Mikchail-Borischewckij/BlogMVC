@@ -68,13 +68,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\ICommentsRepository.cs" />
+    <Compile Include="Abstract\ILikeRepository.cs" />
     <Compile Include="Abstract\IPostRepository.cs" />
     <Compile Include="Abstract\IUserRepository.cs" />
     <Compile Include="Concrete\BlogDataBase.cs" />
     <Compile Include="Concrete\CommentsRepository.cs" />
+    <Compile Include="Concrete\LikeRepository.cs" />
     <Compile Include="Concrete\PostRepository.cs" />
     <Compile Include="Concrete\UsersRepository.cs" />
     <Compile Include="Entities\Comments.cs" />
+    <Compile Include="Entities\Likes.cs" />
+    <Compile Include="Entities\Link.cs" />
     <Compile Include="Entities\Post.cs" />
     <Compile Include="Entities\Users.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

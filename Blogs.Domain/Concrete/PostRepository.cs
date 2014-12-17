@@ -1,10 +1,7 @@
-﻿using Blogs.Domain.Abstract;
-using Blogs.Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Blogs.Domain.Abstract;
+using Blogs.Domain.Entities;
 
 namespace Blogs.Domain.Concrete
 {
@@ -17,7 +14,7 @@ namespace Blogs.Domain.Concrete
             data = new BlogDataBase();
         }
 
-        public IQueryable<Post> Post
+        public IQueryable<Post> Get
         {
             get
             {
@@ -25,38 +22,41 @@ namespace Blogs.Domain.Concrete
             }
         }
 
-        public void CreatePost(Post post)
+        public bool Create(Post post)
         {
-            if (post.IdPost == 0)
-            {
-                post.create_time = DateTime.Now;
-                data.Posts.Add(post);
-            }
+            if (post.Id != 0)
+                return false;
+
+            post.CreateTime = DateTime.Now;
+            data.Posts.Add(post);
             data.SaveChanges();
+            return true;
         }
 
-        public void SavePost(Post post)
+        public bool Update(Post post)
         {
-            Post findPost = data.Posts.Find(post.IdPost);
-            if (findPost != null)
-            {
-                findPost.Title = post.Title;
-                findPost.Preview = post.Preview;
-                findPost.Content = post.Content;
-                findPost.tags = post.tags;
-                findPost.update_time = DateTime.Now;
-                data.SaveChanges();
-            }
+            var findPost = data.Posts.Find(post.Id);
+            if (findPost == null)
+                return false;
+
+            findPost.Title = post.Title;
+            findPost.Preview = post.Preview;
+            findPost.Content = post.Content;
+            findPost.Tags = post.Tags;
+            findPost.UpdateTime = DateTime.Now;
+            data.SaveChanges();
+            return true;
         }
 
-        public void DeletePost(Post post)
+        public bool Delete(Post post)
         {
-            if (post != null)
-            {
-                Post postForDelete = data.Posts.FirstOrDefault(p => p.IdPost == post.IdPost);
-                data.Posts.Remove(postForDelete);
-                data.SaveChanges();
-            }
+            if (post == null)
+                return false;
+
+            var postForDelete = data.Posts.FirstOrDefault(p => p.Id == post.Id);
+            data.Posts.Remove(postForDelete);
+            data.SaveChanges();
+            return true;
         }
     }
 

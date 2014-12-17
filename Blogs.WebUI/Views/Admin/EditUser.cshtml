@@ -2,41 +2,33 @@
 
 @{
     ViewBag.Title = "EditUser";
+    Layout = "~/Views/_Layout.cshtml";
 }
 
-@using (Html.BeginForm()) {
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <legend>Users</legend>
-
-        <div class="control-group">
-            <h5>Name: @Model.Login</h5>
+<center>
+    <div class="editUser">
+        @using (@Html.BeginForm())
+        {
+            <legend class="line">Users</legend>
+            @Html.HiddenFor(model => model.Id)
+            <div>
+                <h5 class="textUser"><b>Name:  </b><b class="mytext">@Model.Login</b></h5> 
             </div>
-
-            <div class="editor-label">
-                <h5>Email: @Model.Email</h5>
-            </div>
-
-
-
-            <h5>Curent role: @ViewBag.Role</h5>
-
-            @{ List<SelectListItem> list = new List<SelectListItem>();
-             list.Add(new SelectListItem() { Text = null });
-             list.Add(new SelectListItem() { Text = "fan" });
-             list.Add(new SelectListItem() { Text = "manager" });
-             list.Add(new SelectListItem() { Text = "administrator" });
-            }
-            <h5>Set role</h5>
-            @Html.DropDownList("nameRole", list)
+            <h5 class="textUser"><b>Email:  </b><b class="mytext">@Model.Email</b></h5>
+            <h5 class="textUser" ><b>Curent role:  </b><b class="mytext">@ViewBag.Role</b></h5> 
+            <h5 class="text">Set role</h5>
+            @Html.DropDownList("nameRole", (IEnumerable<SelectListItem>)ViewBag.Datas)
             <p>
-                <input type="submit" value="Save" />
+                <center>
+                    <input class="btn btn-primary" type="submit" value="Save" style="width: 100px;"/>
+                </center>
             </p>
-</fieldset>
-}
+            <br/>
+            <div class="editLink">@Html.ActionLink("Back to List", "AllUsersShow")</div>
 
+        }
+    </div>
+</center>
 <div>
-    @Html.ActionLink("Back to List", "AllUsersShow")
+    
 </div>

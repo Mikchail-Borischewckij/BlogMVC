@@ -1,72 +1,77 @@
-﻿using Blogs.Domain.Abstract;
+﻿using System.Linq;
+using System.Web.Mvc;
+using Blogs.Domain.Abstract;
 using Blogs.Domain.Entities;
 using Blogs.WebUI.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
 
 namespace Blogs.WebUI.Controllers
 {
     public class CommentsController : Controller
     {
-        IPostRepository postRepos;
-        ICommentsRepository repository;
-        IUserRepository userRepo;
+        private IPostRepository _postRepos;
+        private ICommentsRepository _repository;
+        private IUserRepository _userRepo;
 
         public CommentsController(ICommentsRepository repoParam, IUserRepository userRepo, IPostRepository postRepos)
         {
-            this.repository = repoParam;
-            this.userRepo = userRepo;
-            this.postRepos = postRepos;
+            _repository = repoParam;
+            _userRepo = userRepo;
+            _postRepos = postRepos;
         }
 
         //
         // GET: /Comments/
 
-        public ActionResult ShowAllCommentsById(int? idPost)
-        {
-
-            CommentsViewModel model = new CommentsViewModel()
-            {
-
-                IdPost = idPost == null ? 0 : (int)idPost,
-                comments = repository.Comments.Where(p => p.IdPost == idPost)
-            };
-
-            return View(model);
-        }
-
-        
         [HttpGet]
         public ViewResult CreateComment()
         {
             return View();
         }
 
-        [Authorize]
-        [HttpPost]
+        [HttpPost, ValidateInput(false)]
         public ActionResult CreateComment(CommentCreateViewModel model, int? idPost)
         {
-            if (ModelState.IsValid)
-            {
-
-                Comments comment = new Comments()
-                {
-                    Content = model.Content,
-                    IdPost = idPost == null ? 0 : (int)idPost,
-
-                };
-                comment.IdUsers = userRepo.Users.FirstOrDefault(u => u.Login == User.Identity.Name).UserId;
-                repository.CreateComments(comment);
-            }
-            else
+            if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "For some reason you can not create a comment");
                 return View(model);
             }
-            return RedirectToAction("AllPost", "Post", new { idPost = idPost });
+
+            if (!User.Identity.IsAuthenticated)
+                return PartialView("CommentError");
+
+            var firstOrDefault = _userRepo.Get.FirstOrDefault(u => u.Login == User.Identity.Name);
+            if (firstOrDefault == null)
+            {
+                ModelState.AddModelError("", "For some reason you can not create a comment");
+                return View(model);
+            }
+            var comment = new Comments
+            {
+                Content = model.Content,
+                IdPost = idPost ?? 0,
+                IdUsers = firstOrDefault.Id,
+            };
+            _repository.Create(comment);
+            model.CreateTime = comment.CreateTime;
+            model.User = firstOrDefault;
+            model.Post = _postRepos.Get.FirstOrDefault(p => p.Id == idPost);
+
+            if (Request.IsAjaxRequest())
+                return PartialView("Comment", model);
+
+            return RedirectToAction("AllPost", "Post", new {idPost});
+        }
+
+        [HttpPost]
+        public ActionResult DeleteComment(int? idComment, int? idPost)
+        {
+            if (!User.IsInRole("administrator") || idComment == 0)
+                return RedirectToAction("AllPost", "Post", new {idPost});
+            if (idComment != null)
+                _repository.Delete(idComment);
+
+            return RedirectToAction("AllPost", "Post", new {idPost});
         }
     }
 }

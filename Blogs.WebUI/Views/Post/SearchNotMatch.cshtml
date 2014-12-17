@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "SearchNotMatch";
+    Layout = "~/Views/_Layout.cshtml";
+}
+
+<div>
+        <h4>Your search did not match any documents.</h4>
+
+        <h5>Suggestions:</h5>
+
+        <ul>
+            <li>Make sure all words are spelled correctly.</li>
+            <li>Try different keywords.</li>
+            <li>Try more general keywords.</li>
+        </ul>
+
+        <h6>Note that the search is only title posts and tags</h6>
+
+        <div>
+            <h5>try one more time</h5>
+            @using (Html.BeginForm("ListPost", "Post", FormMethod.Get))
+            { 
+                @Html.TextBox("search")
+                <button type="submit" class="btn btn-primary search">Search</button>
+            }
+        </div>
+    </div>

@@ -1,0 +1,15 @@
+﻿ @model Blogs.WebUI.Models.CommentCreateViewModel
+
+ @using (Html.BeginForm("DeleteComment", "Comments",FormMethod.Post))
+ {
+     @Html.Hidden("idPost", Model.Post.Id)
+     @Html.Hidden("idComment", Model.Id)
+     <button class="buttonDeleteComment" type="submit">x</button>
+ }
+<p class="com"> Сomment by <a href="@Url.Action("GetAllPostByUser", "Post", new { idUser = Model.User.Id })"> @Model.User.Login </a>@Model.CreateTime  </p>
+    <p class="content"><b>@Model.Content</b></p>
+
+    <hr>
+
+
+

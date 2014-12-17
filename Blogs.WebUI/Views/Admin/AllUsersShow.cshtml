@@ -4,26 +4,43 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<h4>All users </h4>
-
-
-<table class="Grid">
-    @if (Model != null)
+<center>
+    <div class="lineblue">
+        <h3 class="infoText"><b>Users Information</b> </h3>
+    </div>      
+          
+    <div class="sosor">
+        <div class="Login"><b>Login</b></div>
+        <div class="Email"><b>Email </b></div>
+        <div class="Actions"><b>Actions</b></div>
+    </div>
+    @foreach (var user in Model)
     {
-        foreach (var user in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(user.Login, "EditUser", new { IdUser = user.UserId })</td>
-                <td>
-                    @using (Html.BeginForm("Delete", "Admin"))
-                    {
-                        @Html.Hidden("UserId", user.UserId)
-    <button type="submit" class="btn btn-primary">Delete</button>
-                    }
-                </td>
+        <div class="sosor">
+            <div class="Login">@user.Login</div>
+            <div class="Email">@user.Email </div>
 
-            </tr>
-        }
-    } 
+            <div class="buttonDelete">
+                @using (Html.BeginForm("Delete", "Admin"))
+                {
 
-    
+                    @Html.Hidden("Id", user.Id)
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                }
+            </div>
+
+
+            <div class="buttonEdit">
+                @using (Html.BeginForm("EditUser", "Admin", FormMethod.Get))
+                {
+                    @Html.Hidden("IdUser", user.Id)
+                    <button type="submit" class="btn btn-success">Edit</button>
+                }
+
+            </div>
+
+        </div>
+
+    }
+
+</center>

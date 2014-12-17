@@ -1,21 +1,47 @@
 ﻿@model Blogs.WebUI.Models.FullPostViewModel
 @{
-    ViewBag.Title = "AllPost";   
+    ViewBag.Title = "AllPost";
+    Layout = "~/Views/_Layout.cshtml";
 }
 
-<div class="post">
-    <h2>@Model.Title</h2>
-    <p class="posted"> Posted by <a href="@Url.Action("GetAllPostByUser", "Post", new { Model.IdUser })">@Html.Action("GetUserNameById", "Users", new { Model.IdUser })</a> @Model.create_time </p>
-    <p class="content">@Model.Content</p>
-    <hr>
-    @foreach (var tag in @Model.tags)
-    {
-        <a href="@Url.Action("GetAllPostByTag", new {tag = @tag })"> @tag </a>
-      
-    }
-   
-</div>
-<hr>
+    <div class="post">
+        <h1 class="text-info"><b>@Model.Title</b></h1>
+        <p class="posted"> Posted by <a href="@Url.Action("GetAllPostByUser", "Post", new {idUser = Model.User.Id })">@Model.User.Login</a> @Model.CreateTime </p>
+        <p class="content">@Model.Content</p>
 
-@{Html.RenderAction("CreateComment", "Comments", Model.idPost);} 
-@{Html.RenderPartial("AllComment");}
+        @using (Ajax.BeginForm(
+        "LikePost",
+        "post",
+        new AjaxOptions
+        {
+            HttpMethod = "post",
+            UpdateTargetId = "target",
+            LoadingElementId = "sendingProgress",
+            InsertionMode = InsertionMode.Replace
+        }))
+        {
+
+            @Html.Hidden("idPost", Model.Id)
+            <p id="target">
+
+                <button type="submit" class="btn btn-primary">
+                    <img src="~/img/glyphicons-13-heart.png" />
+                    @Model.CountLike
+                </button>
+            </p>
+        }
+
+        <hr>
+        @foreach (var tag in @Model.Tags)
+        {
+            <a href="@Url.Action("GetAllPostByTag", new {@tag })"> @tag </a>
+
+        }
+
+    </div>
+    <hr>
+    @{Html.RenderAction("CreateComment", "Comments", Model.Id);}
+    <div id="comment" class="span4">
+        @{Html.RenderPartial("AllComment");}
+    </div>
+

@@ -4,23 +4,45 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<table class="Grid">
-    @if (Model != null)
-    {
-        foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.ActionLink(item.Title, "Edit", new { item.IdPost })</td>
-                <td>
-                    @using (Html.BeginForm("Delete", "ChangePost"))
-                    {
-                        @Html.Hidden("idPost", item.IdPost)
-    <button type="submit" class="btn btn-primary">Delete</button>
-                    }
-                </td>
-            </tr>
-        }
-    }
-</table>
+<center>
+    <div class="lineblue">
+        <h3 class="infoText" style="color: white"><b>Post Information</b>
+        </h3>
+    </div>
 
-<p>@Html.ActionLink("Add a new post", "CreatePost")</p>
+    <div class="sosor">
+        <div class="titlePost"><b>Title</b>
+        </div>
+        <div class="ActionsPost"><b>Actions</b>
+        </div>
+    </div>
+
+    @foreach (var item in Model)
+    {
+        <div class="sosor">
+            <div class="Link">@Html.ActionLink(item.Title, "Edit", new {IdPost = item.Id}, new {@class = "mylink"})</div>
+
+            <div class="buttonDel">
+                @using (Html.BeginForm("Delete", "ChangePost"))
+                {
+                    @Html.Hidden("idPost", item.Id)
+                    <button type="submit" class="btn btn-primary">Delete</button>
+                }
+            </div>
+
+            <div class="buttonEd">
+                @using (Html.BeginForm("Edit", "ChangePost", FormMethod.Get))
+                {
+                    @Html.Hidden("IdPost", item.Id)
+                    <button type="submit" class="btn btn-success">Edit</button>
+                }
+
+            </div>
+
+        </div>
+    }
+
+
+    <p>@Html.ActionLink("Add a new post", "CreatePost")</p>
+</center>
+

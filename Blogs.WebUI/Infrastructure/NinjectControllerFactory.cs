@@ -1,36 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using System.Web.Routing;
-using Ninject;
-using Blogs.Domain.Entities;
 using Blogs.Domain.Abstract;
 using Blogs.Domain.Concrete;
+using Ninject;
 
 namespace Blogs.WebUI.Infrastructure
 {
     public class NinjectControllerFactory : DefaultControllerFactory
     {
-        private IKernel ninjectKernel;
+        private IKernel _ninjectKernel;
 
         public NinjectControllerFactory()
         {
-            ninjectKernel = new StandardKernel();
+            _ninjectKernel = new StandardKernel();
             AddBindings();
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
         {
-            return controllerType == null ? null : (IController)ninjectKernel.Get(controllerType);
+            return controllerType == null ? null : (IController)_ninjectKernel.Get(controllerType);
         }
 
         private void AddBindings()
         {
-            ninjectKernel.Bind<IUserRepository>().To<UsersRepository>();
-            ninjectKernel.Bind<IPostRepository>().To<PostRepository>();
-            ninjectKernel.Bind<ICommentsRepository>().To<CommentsRepository>();
-
+            _ninjectKernel.Bind<IUserRepository>().To<UsersRepository>();
+            _ninjectKernel.Bind<IPostRepository>().To<PostRepository>();
+            _ninjectKernel.Bind<ICommentsRepository>().To<CommentsRepository>();
+            _ninjectKernel.Bind<ILikeRepository>().To<LikeRepository>();
         }
      
        

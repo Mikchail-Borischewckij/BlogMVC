@@ -5,46 +5,42 @@
     Layout = "~/Views/_Layout.cshtml";
 }
 
-<h2>Please log in</h2>
-<script src="@Url.Content("~/Scripts/jquery-1.11.1.min.js")"
-        type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.js")"
-        type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")"
-        type="text/javascript"></script>
-
 @{Html.EnableClientValidation();}
 @{Html.EnableUnobtrusiveJavaScript();}
-
-@using (@Html.BeginForm())
-{
-    <div class="text-error">
-        @Html.ValidationSummary(true, "You have some problem: ")
-    </div>
-    <div class="control-group">
-        @Html.LabelFor(m => m.Login, new { @class = "control-label" })
-        <div class="controls">
-            @Html.TextBoxFor(m => m.Login, new { @class = "control-label" })
-            <div class="text-error">
-                @Html.ValidationMessageFor(m => m.Login)
-            </div>
-</div>
-    </div>
-
-    <div class="control-group">
-        @Html.LabelFor(m => m.Password, new { @class = "control-label" })
-        <div class="controls">
-            @Html.PasswordFor(m => m.Password)
-            <p class="text-error">
-                @Html.ValidationMessageFor(m => m.Password)
-            </p>
-</div>
-
+<center>
+    <h2>Log in</h2>
+    @using (@Html.BeginForm())
+    {
+        <div class="text-error">
+            <b>@Html.ValidationSummary(true, "You have some problem: ")</b>
+        </div>
         <div class="control-group">
+
+            @Html.LabelFor(m => m.Login, new { @class = "control-label" })
             <div class="controls">
- 
-                <button type="submit" class="btn btn-primary">Log in</button>
+                @Html.TextBoxFor(m => m.Login, new { @class = "control-label", @placeholder = "Login" })
+                <div class="text-error">
+                    <b> @Html.ValidationMessageFor(m => m.Login)</b>
+                </div>
             </div>
         </div>
-    </div>
-}
+
+        <div class="control-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            <div class="controls">
+                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password" })
+                <p class="text-error">
+                    <b>@Html.ValidationMessageFor(m => m.Password)</b>
+                </p>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+            </div>
+        </div>
+    }
+
+</center>

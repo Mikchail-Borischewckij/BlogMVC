@@ -1,11 +1,7 @@
-﻿using Blogs.Domain.Abstract;
-using Blogs.Domain.Entities;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
+using Blogs.Domain.Abstract;
+using Blogs.Domain.Entities;
 
 namespace Blogs.Domain.Concrete
 {
@@ -18,7 +14,7 @@ namespace Blogs.Domain.Concrete
             data = new BlogDataBase();
         }
 
-        public IQueryable<Comments> Comments
+        public IQueryable<Comments> Get
         {
             get
             {
@@ -26,25 +22,25 @@ namespace Blogs.Domain.Concrete
             }
         }
 
-        public void CreateComments(Comments coment)
+        public void Create(Comments coment)
         {
-            if (coment.IdComments == 0)
+            if (coment.Id == 0)
             {
-                coment.create_time = DateTime.Now;
+                coment.CreateTime = DateTime.Now;
                 data.Comments.Add(coment);
             }
             data.SaveChanges();
            
         }
-        public void DeleteComment(Comments coment)
+        public void Delete(int? idComment)
         {
-            if (coment != null)
+            if (idComment != null)
             {
-                Comments comentForDelete = data.Comments.FirstOrDefault(p => p.IdComments == coment.IdComments);
+                Comments comentForDelete = data.Comments.FirstOrDefault(p => p.Id == idComment);
                 data.Comments.Remove(comentForDelete);
                 data.SaveChanges();
             }
         }
-      
+
     }
 }
