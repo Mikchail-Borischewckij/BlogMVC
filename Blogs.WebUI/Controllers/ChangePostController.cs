@@ -30,7 +30,6 @@ namespace Blogs.WebUI.Controllers
 
             if (User.IsInRole("administrator"))
                 return View(_postRepo.Get);
-
             return RedirectToAction("ListPost", "Post");
         }
 
@@ -40,7 +39,6 @@ namespace Blogs.WebUI.Controllers
             var post = _postRepo.Get.FirstOrDefault(p => p.Id == idPost);
             if (post == null)
                 return RedirectToAction("Error404", "Post");
-
             return View(post);
         }
 

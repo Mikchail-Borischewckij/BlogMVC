@@ -31,9 +31,6 @@ namespace Blogs.Domain.Concrete
             return true;
         }
 
-        /// <summary>
-        /// Authentication users
-        /// </summary>
         public bool Authentication(string userNameorEmail, string userPassword)
         {
             int hash = userPassword.GetHashCode();

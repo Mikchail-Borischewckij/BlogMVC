@@ -70,7 +70,6 @@ namespace Blogs.WebUI.Controllers
                 return RedirectToAction("AllPost", "Post", new {idPost});
             if (idComment != null)
                 _repository.Delete(idComment);
-
             return RedirectToAction("AllPost", "Post", new {idPost});
         }
     }

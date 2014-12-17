@@ -31,7 +31,6 @@ namespace Blogs.WebUI.Controllers
         public ActionResult ListPost(int page = 1, string search = "")
         {
             ViewBag.Page = true;
-
             if (!String.IsNullOrEmpty(search))
             {
                 ViewBag.Page = false;
