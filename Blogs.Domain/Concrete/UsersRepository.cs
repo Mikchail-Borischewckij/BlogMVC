@@ -12,7 +12,6 @@ namespace Blogs.Domain.Concrete
         {
             if (user.Id == 0)
                 _blogDb.Users.Add(user);
-
             _blogDb.SaveChanges();
             return false;
         }
@@ -26,14 +25,13 @@ namespace Blogs.Domain.Concrete
             userOfDb.Login = user.Login;
             userOfDb.Password = user.Password;
             userOfDb.Email = user.Email;
-
             _blogDb.SaveChanges();
             return true;
         }
 
         public bool Authentication(string userNameorEmail, string userPassword)
         {
-            int hash = userPassword.GetHashCode();
+            var hash = userPassword.GetHashCode();
             var user = from u in _blogDb.Users where u.Login == userNameorEmail && u.Password == hash.ToString() select u;
             var users = user.ToList();
 
@@ -53,7 +51,7 @@ namespace Blogs.Domain.Concrete
             if (user == null)
                 return false;
 
-            Users userForDelete = _blogDb.Users.FirstOrDefault(p => p.Id == user.Id);
+            var userForDelete = _blogDb.Users.FirstOrDefault(p => p.Id == user.Id);
             _blogDb.Users.Remove(userForDelete);
             _blogDb.SaveChanges();
             return true;

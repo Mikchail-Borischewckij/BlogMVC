@@ -79,7 +79,7 @@ namespace Blogs.WebUI.Controllers
             var usContr = new UsersController(_repo);
             var curentRole =
                 Roles.GetRolesForUser(usContr.GetUserNameById(user.Id))[
-                    Roles.GetRolesForUser(usContr.GetUserNameById(user.Id)).Count()];
+                    Roles.GetRolesForUser(usContr.GetUserNameById(user.Id)).Length-1];
             Roles.RemoveUserFromRole(usContr.GetUserNameById(user.Id), curentRole);
         }
 

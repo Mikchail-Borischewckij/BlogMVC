@@ -7,10 +7,12 @@ namespace Blogs.WebUI.Models
 
         [Required]
         [Display(Name = "Login")]
+        [StringLength(50, ErrorMessage = "This fiels must be less the {1} symbols")]
         public string Login { get; set; }
 
         [Required]
         [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter correct email address")]
+        [StringLength(50, ErrorMessage = "This fiels must be less the {1} symbols")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
@@ -30,6 +32,7 @@ namespace Blogs.WebUI.Models
     {
         [Required]
         [Display(Name = "Enter login")]
+        [StringLength(50, ErrorMessage = "This fiels must be less the {1} symbols")]
         public string Login { get; set; }
 
         [Required]
@@ -44,6 +47,7 @@ namespace Blogs.WebUI.Models
     {
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(100, ErrorMessage = "This fiels must be less the {1} symbols")]
         [Display(Name = "Old password")]
         public string OldPassword { get; set; }
 
@@ -59,28 +63,4 @@ namespace Blogs.WebUI.Models
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
-
-    public class EditUsersModel
-    {
-
-        public int UserId { get; set; }
-
-        [Required]
-        [Display(Name = "Login")]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.")]
-        public string Login { get; set; }
-
-        [Required]
-        [RegularExpression(@"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}", ErrorMessage = "Please enter correct email address")]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
-
-        [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Password")]
-        public string Password { get; set; }
-     
-    }
-     
 }

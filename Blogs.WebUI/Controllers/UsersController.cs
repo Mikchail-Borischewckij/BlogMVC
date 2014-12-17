@@ -29,7 +29,7 @@ namespace Blogs.WebUI.Controllers
         {
             if (!ModelState.IsValid || _repo.CheckExist(model.Login))
             {
-                ModelState.AddModelError("", "User with " + model.Login + " name already exists");
+                ModelState.AddModelError("", "User with name already exists");
                 return View(model);
             }
             var user = new Users()

@@ -8,7 +8,6 @@
     <div class="lineblue">
         <h3 class="infoText"><b>Users Information</b> </h3>
     </div>      
-          
     <div class="sosor">
         <div class="Login"><b>Login</b></div>
         <div class="Email"><b>Email </b></div>
@@ -19,7 +18,6 @@
         <div class="sosor">
             <div class="Login">@user.Login</div>
             <div class="Email">@user.Email </div>
-
             <div class="buttonDelete">
                 @using (Html.BeginForm("Delete", "Admin"))
                 {
@@ -28,7 +26,6 @@
                     <button type="submit" class="btn btn-primary">Delete</button>
                 }
             </div>
-
 
             <div class="buttonEdit">
                 @using (Html.BeginForm("EditUser", "Admin", FormMethod.Get))

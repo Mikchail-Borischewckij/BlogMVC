@@ -10,16 +10,16 @@
     @{Html.EnableClientValidation();}
     @{Html.EnableUnobtrusiveJavaScript();}
 
-    @using (Html.BeginForm("RegisterUsers", "Users", new { ViewBag.ReturnUrl },
+    @using (Html.BeginForm("RegisterUsers", "Users", new {ViewBag.ReturnUrl},
         FormMethod.Post))
     {
         <div class="text-error">
             <b>@Html.ValidationSummary(true, "Failed to create an account. Please correct errors and try again.")</b>
         </div>
         <div class="control-group">
-            <h6>@Html.LabelFor(m => m.Login, new { @class = "control-label" }) </h6>
+            <h6>@Html.LabelFor(m => m.Login, new {@class = "control-label"}) </h6>
             <div class="controls">
-                @Html.TextBoxFor(m => m.Login, new { @placeholder = "Login" })
+                @Html.TextBoxFor(m => m.Login, new {@placeholder = "Login"})
                 <div class="text-error">
                     <b>@Html.ValidationMessageFor(m => m.Login)</b>
                 </div>
@@ -27,9 +27,9 @@
         </div>
 
         <div class="control-group">
-            <b>@Html.LabelFor(m => m.Email, new { @class = "control-label" })</b>
+            <b>@Html.LabelFor(m => m.Email, new {@class = "control-label"})</b>
             <div class="controls">
-                @Html.TextBoxFor(m => m.Email, new { @placeholder = "Email address" })
+                @Html.TextBoxFor(m => m.Email, new {@placeholder = "Email address"})
                 <div class="text-error">
                     <b>@Html.ValidationMessageFor(m => m.Email)</b>
                 </div>
@@ -37,9 +37,9 @@
         </div>
 
         <div class="control-group">
-            <b>@Html.LabelFor(m => m.Password, new { @class = "control-label" })</b>
+            <b>@Html.LabelFor(m => m.Password, new {@class = "control-label"})</b>
             <div class="controls">
-                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password" })
+                @Html.PasswordFor(m => m.Password, new {@placeholder = "Password"})
                 <div class="text-error">
                     <b>@Html.ValidationMessageFor(m => m.Password)</b>
                 </div>
@@ -47,9 +47,9 @@
         </div>
 
         <div class="control-group">
-            <b>@Html.LabelFor(m => m.ConfirmPassword, new { @class = "control-label" })</b>
+            <b>@Html.LabelFor(m => m.ConfirmPassword, new {@class = "control-label"})</b>
             <div class="controls">
-                @Html.PasswordFor(m => m.ConfirmPassword, new { @placeholder = "Confirm Password" })
+                @Html.PasswordFor(m => m.ConfirmPassword, new {@placeholder = "Confirm Password"})
                 <div class="text-error">
                     <b>@Html.ValidationMessageFor(m => m.ConfirmPassword)</b>
                 </div>
@@ -57,7 +57,7 @@
         </div>
 
         <div>
-            <input type="submit" class="btn btn-primary" value="Submit" />
+            <input type="submit" class="btn btn-primary" value="Submit"/>
         </div>
     }
 </center>
