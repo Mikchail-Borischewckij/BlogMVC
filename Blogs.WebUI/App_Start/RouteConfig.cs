@@ -17,6 +17,12 @@ namespace Blogs.WebUI
                 );
 
             routes.MapRoute(
+                name: "MyRoute",
+                url: "Post/page{page}",
+                defaults: new {Controller = "Post", Action = "ListPost"}
+                );
+
+            routes.MapRoute(
                 name: null,
                 url: "{controller}/{action}/{id}",
                 defaults: new {controller = "Post", action = "ListPost", id = UrlParameter.Optional}
