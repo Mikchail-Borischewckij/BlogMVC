@@ -82,9 +82,9 @@ namespace Blogs.WebUI.Controllers
         [HttpGet]
         public ActionResult AllPost(int? idPost)
         {
+            const char separator = '#';
             var model = new FullPostViewModel();
             var post = _repo.Get.FirstOrDefault(p => p.Id == idPost);
-
             if (post == null)
                 return RedirectToAction("Error404");
 
@@ -94,40 +94,10 @@ namespace Blogs.WebUI.Controllers
             model.Content = post.Content;
             model.CreateTime = post.CreateTime;
             model.UpdateTime = post.UpdateTime;
-            model.Tags = CreateArrayOfTags(post.Tags);
+            model.Tags = post.Tags.Trim().Split(separator);
             model.Comments = _repository.Get.Where(p => p.IdPost == idPost);
             model.CountLike = _likeRep.Get.Count(p => p.IdPost == idPost);
             return View(model);
-        }
-
-        [NonAction]
-        public string[] CreateArrayOfTags(string str)
-        {
-            const char separator = '#';
-            var countOfTags = str.Count(t => t == separator);
-            string[] tags = new string[countOfTags];
-            int k = 0;
-
-            for (int i = 0; i < str.Length; i++)
-            {
-                if (str[i] != separator) continue;
-                do
-                {
-                    if (i == str.Length - 1)
-                    {
-                        tags[k] += str[i];
-                        break;
-                    }
-
-                    tags[k] += str[i];
-                    i++;
-                } while (str[i] != separator);
-
-                tags[k].Trim();
-                k++;
-                i--;
-            }
-            return tags;
         }
 
         [HttpGet]

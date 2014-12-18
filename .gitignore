@@ -172,7 +172,7 @@ UpgradeLog*.XML
 UpgradeLog*.htm
 
 # SQL Server files
-
+BlogDataBase_log.ldf
 *.ldf
 
 # Business Intelligence projects
