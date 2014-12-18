@@ -80,7 +80,8 @@ namespace Blogs.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("ListPost", "Post");
+                ModelState.AddModelError("", "Your old password incorrect. Try another time.");
+                return View();
             }
             var oldPass = model.OldPassword.GetHashCode().ToString();
             var user = _repo.Get.FirstOrDefault(u => u.Login == User.Identity.Name && u.Password == oldPass);
@@ -98,6 +99,8 @@ namespace Blogs.WebUI.Controllers
 
         public string GetUserNameById(int? idUser)
         {
+            if (idUser == null)
+                return "User is deleted";
             var user = _repo.Get.FirstOrDefault(p => p.Id == idUser);
             return user != null ? user.Login : "User is deleted";
         }

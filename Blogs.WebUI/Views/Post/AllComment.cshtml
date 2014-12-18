@@ -1,7 +1,7 @@
 ﻿@model Blogs.WebUI.Models.FullPostViewModel
 
 
-    @foreach (var comment in Model.Comments.OrderBy(x =>x.Id))
+    @foreach (var comment in Model.Comments.OrderBy(x =>x.CreateTime))
     {
            using (Html.BeginForm("DeleteComment", "Comments",FormMethod.Post))
                     {

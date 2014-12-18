@@ -10,7 +10,6 @@ namespace Blogs.WebUI.Controllers
     public class AdminController : Controller
     {
         private IUserRepository _repo;
-
         public AdminController(IUserRepository repoParam)
         {
             _repo = repoParam;
@@ -67,7 +66,6 @@ namespace Blogs.WebUI.Controllers
         {
             if (user == null)
                 return RedirectToAction("AllUsersShow");
-
             RemoveRoleOfUser(user);
             _repo.Delete(user);
 

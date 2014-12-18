@@ -16,9 +16,9 @@
         </div>
         <div class="control-group">
 
-            @Html.LabelFor(m => m.Login, new { @class = "control-label" })
+            @Html.LabelFor(m => m.Login, new {@class = "control-label"})
             <div class="controls">
-                @Html.TextBoxFor(m => m.Login, new { @class = "control-label", @placeholder = "Login" })
+                @Html.TextBoxFor(m => m.Login, new {@class = "control-label", @placeholder = "Login"})
                 <div class="text-error">
                     <b> @Html.ValidationMessageFor(m => m.Login)</b>
                 </div>
@@ -26,9 +26,9 @@
         </div>
 
         <div class="control-group">
-            @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+            @Html.LabelFor(m => m.Password, new {@class = "control-label"})
             <div class="controls">
-                @Html.PasswordFor(m => m.Password, new { @placeholder = "Password" })
+                @Html.PasswordFor(m => m.Password, new {@placeholder = "Password"})
                 <p class="text-error">
                     <b>@Html.ValidationMessageFor(m => m.Password)</b>
                 </p>
@@ -44,3 +44,4 @@
     }
 
 </center>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>

@@ -53,6 +53,10 @@ namespace Blogs.Domain.Concrete
 
             var userForDelete = _blogDb.Users.FirstOrDefault(p => p.Id == user.Id);
             _blogDb.Users.Remove(userForDelete);
+            var comment = _blogDb.Comments.Where(p => p.IdUsers == userForDelete.Id).ToList();
+            foreach (var com in comment)
+                _blogDb.Comments.Remove(com);
+
             _blogDb.SaveChanges();
             return true;
         }
